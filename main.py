@@ -11,12 +11,12 @@ pygame.display.set_caption('PLANETARY SIMULATION')
 
 FONT = pygame.font.SysFont("calibri", 18)
 
-MASS_OF_MOON = 7.43*10e22
+MASS_OF_MOON = 7.43* 10 ** 22
 
 # Colors for denoting planets
 YELLOW = (255, 255, 0)
 ORANGE = (255, 150, 125)
-BLUE = (0, 255, 210)
+BLUE = (0, 255, 240)
 RED = (255, 75, 75)
 GREY = (180, 80, 80)
 
@@ -53,7 +53,7 @@ def main():
                 run = False
 
         for planet in planet_list:
-            planet.orbit(planet_list)
+            planet.calculate_path(planet_list)
             planet.draw(SOLAR_SYSTEM)
 
         pygame.display.update()

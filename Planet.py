@@ -55,7 +55,7 @@ class Planet:
                 #distance_text = FONT.render(f"{round(self.distance_to_sun/1000, 1)}km", 1, (255, 255, 255))
                 #window.blit(distance_text, (x - distance_text.get_width(), y - distance_text.get_height()))
 
-    def gravitational_attraction(self, other):
+    def g_force_decomposition(self, other):
 
         distance_x = other.x - self.x; distance_y = other.y - self.y
         distance = math.sqrt(distance_x ** 2 + distance_y ** 2)
@@ -71,19 +71,23 @@ class Planet:
         return force_x, force_y
         
 
-    def orbit(self, planets):
+    def sum_g_force(self, planets):
 
     
         total_fx = total_fy = 0
         for planet in planets:
             if self == planet:
                 continue
-            pair_fx, pair_fy = self.gravitational_attraction(planet)
+            pair_fx, pair_fy = self.g_force_decomposition(planet)
             total_fx += pair_fx
             total_fy += pair_fy
+        
+        return [total_fx, total_fy]
 
-        acceleration_x = total_fx / self.mass
-        acceleration_y = total_fy / self.mass
+    def calculate_path(self, planets):
+
+        acceleration_x = self.sum_g_force(planets)[0] / self.mass
+        acceleration_y = self.sum_g_force(planets)[1] / self.mass
 
         self.xvel += acceleration_x * self.T_REF
         self.yvel += acceleration_y * self.T_REF
